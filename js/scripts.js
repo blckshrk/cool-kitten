@@ -1,55 +1,41 @@
 jQuery(document).ready(function ($) {
 
-
     $(window).stellar();
 
     var links = $('.navigation').find('li');
     slide = $('.slide');
     button = $('.button');
-    mywindow = $(window);
-    htmlbody = $('html,body');
+    htmlBody = $('html,body');
 
+	slide.bind('inview', function(event, isInView) {
+		dataSlide = $(this).attr('data-slide');
 
-    slide.waypoint(function (event, direction) {
+		if (isInView) {
+			$('.navigation li[data-slide="' + dataSlide + '"]').addClass('active');
+		} else {
+			$('.navigation li[data-slide="' + dataSlide + '"]').removeClass('active');
+		}
+	});
 
-        dataslide = $(this).attr('data-slide');
-
-        if (direction === 'down') {
-            $('.navigation li[data-slide="' + dataslide + '"]').addClass('active').prev().removeClass('active');
-        }
-        else {
-            $('.navigation li[data-slide="' + dataslide + '"]').addClass('active').next().removeClass('active');
-        }
-
-    });
- 
-    mywindow.scroll(function () {
-        if (mywindow.scrollTop() == 0) {
-            $('.navigation li[data-slide="1"]').addClass('active');
-            $('.navigation li[data-slide="2"]').removeClass('active');
-        }
-    });
-
-    function goToByScroll(dataslide) {
-        htmlbody.animate({
-            scrollTop: $('.slide[data-slide="' + dataslide + '"]').offset().top
+    function goToByScroll(dataSlide) {
+    	var position = $('.slide[data-slide="' + dataSlide + '"]').offset().top;
+        
+        htmlBody.animate({
+            scrollTop: position
         }, 2000, 'easeInOutQuint');
     }
 
 
-
     links.click(function (e) {
         e.preventDefault();
-        dataslide = $(this).attr('data-slide');
-        goToByScroll(dataslide);
+        dataSlide = $(this).attr('data-slide');
+        goToByScroll(dataSlide);
     });
 
     button.click(function (e) {
         e.preventDefault();
-        dataslide = $(this).attr('data-slide');
-        goToByScroll(dataslide);
-
+        dataSlide = $(this).attr('data-slide');
+        goToByScroll(dataSlide);
     });
-
 
 });
