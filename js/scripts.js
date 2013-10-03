@@ -25,7 +25,6 @@ jQuery(document).ready(function ($) {
         }, 2000, 'easeInOutQuint');
     }
 
-
     links.click(function (e) {
         e.preventDefault();
         dataSlide = $(this).attr('data-slide');
